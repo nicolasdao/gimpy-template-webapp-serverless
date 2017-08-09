@@ -112,7 +112,7 @@ exports.deploy = (env = 'default') => {
 				/*eslint-disable */
 				process.on('SIGINT', () => deleteFirebaserc())
 				/*eslint-enable */
-				console.log(`${'LOCALLY'.italic.bold} deploying entry-point ${config.entryPoint.italic.bold} using trigger type ${config.trigger.italic.bold}.`.cyan)
+				console.log(`${'LOCALLY'.italic.bold} deploying entry-point ${config.entryPoint.italic.bold} using trigger type ${'HTTP'.italic.bold}.`.cyan)
 				shell.exec(`firebase use ${config.project}`)
 				shell.exec('firebase serve --only functions')
 			}
@@ -128,7 +128,7 @@ exports.deploy = (env = 'default') => {
 			createFirebaserc(env, config.project)
 
 			try {
-				console.log(`Deploying entry-point ${config.entryPoint.italic.bold} to ${'FIREBASE'.italic.bold} located in project ${config.project.italic.bold} using trigger type ${config.trigger.italic.bold}`.cyan)
+				console.log(`Deploying entry-point ${config.entryPoint.italic.bold} to ${'FIREBASE'.italic.bold} located in project ${config.project.italic.bold} using trigger type ${'HTTP'.italic.bold}`.cyan)
 				shell.exec(`firebase use ${config.project}`)
 				shell.exec('firebase deploy --only functions')
 

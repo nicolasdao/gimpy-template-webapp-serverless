@@ -74,7 +74,7 @@ exports.questions = [{
 	},
 	files: ['index.js', 'appconfig.json']
 },{
-	question: answers => `${answers.hosting == 'googlecloud' ? 'Google Cloud' : 'Firebase'} Project: (${answers.projectName.toLowerCase()}) `.cyan,
+	question: answers => `${answers.hosting == 'googlecloud' ? 'Google Cloud' : 'Firebase'} Project (If you're not sure, run ${answers.hosting == 'googlecloud' ? `'gcloud projects list'`.italic.bold : `'firebase list'`.italic.bold} to list all your available projects): (${answers.projectName.toLowerCase()}) `.cyan,
 	answerName: 'project',
 	defaultValue: answers => answers.projectName,
 	execute: {
