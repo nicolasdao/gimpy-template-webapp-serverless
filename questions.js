@@ -28,14 +28,6 @@ exports.questions = [{
 	defaultValue: () => '1.0.0',
 	files: ['package.json']
 },{
-	question: answers => `Google Cloud Function name : (${sanitizeFunctionName(answers.projectName)}) `.cyan,
-	answerName: 'functionName',
-	defaultValue: answers => answers.projectName,
-	execute: {
-		onSuccess: answer => sanitizeFunctionName(answer)
-	},
-	files: ['appconfig.json']
-},{
 	question: () => ('Hosting: \n' + 
 					'  [1] Google Cloud Functions \n' +
 					'  [2] Firebase Functions \n' +
@@ -46,6 +38,15 @@ exports.questions = [{
 		validate: answer => HOSTING[answer],
 		onSuccess: answer => HOSTING[answer],
 		onError: answer => `'${answer}' is not a valid hosting option.`
+	},
+	files: ['appconfig.json']
+},{
+	skip: answers => answers.hosting == 'firebase',
+	question: answers => `Google Cloud Function name : (${sanitizeFunctionName(answers.projectName)}) `.cyan,
+	answerName: 'functionName',
+	defaultValue: answers => answers.projectName,
+	execute: {
+		onSuccess: answer => sanitizeFunctionName(answer)
 	},
 	files: ['appconfig.json']
 },
@@ -65,7 +66,7 @@ exports.questions = [{
 // 	files: ['appconfig.json']
 // },
 {
-	question: answers => `Google Cloud Function entry-point (no spaces, no hyphens): (${sanitizeEntryPoint(answers.projectName)}) `.cyan,
+	question: answers => `${answers.hosting == 'googlecloud' ? 'Google Cloud' : 'Firebase'} Function entry-point (no spaces, no hyphens): (${sanitizeEntryPoint(answers.projectName)}) `.cyan,
 	answerName: 'entryPoint',
 	defaultValue: answers => answers.projectName,
 	execute: {
@@ -81,6 +82,7 @@ exports.questions = [{
 	},
 	files: ['appconfig.json']
 },{
+	skip: answers => answers.hosting == 'firebase',
 	question: answers => `Google Cloud Function bucket: (${sanitizeBucket(answers.projectName)}) `.cyan,
 	answerName: 'bucket',
 	defaultValue: answers => answers.projectName,
