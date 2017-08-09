@@ -10,14 +10,14 @@
 			"functionName": "{{functionName}}",
 			"trigger": "--trigger-http",
 			"entryPoint": "{{entryPoint}}",
-			"googleProject": "{{googleProject}}",
+			"project": "{{project}}",
 			"bucket": "{{bucket}}"
 		},
 		"build": {
 			"functionName": "{{functionName}}",
 			"trigger": "--trigger-http",
 			"entryPoint": "{{entryPoint}}",
-			"googleProject": "{{googleProject}}",
+			"project": "{{project}}",
 			"bucket": "{{bucket}}"
 		}
 	}

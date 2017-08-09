@@ -11,28 +11,7 @@ const sanitizeBucket = name => name ? name.trim().split(' ').map(x => x.toLowerC
 const TRIGGERS = { '1': '--trigger-http', '2': '--trigger-topic', '3': '--trigger-bucket' }
 const HOSTING = { '1': 'googlecloud', '2': 'firebase' }
 
-exports.preQuestions = () => {
-	const gcloudNotInstalled = !shell.exec('which gcloud', {silent:true}).stdout
-	const functionsNotInstalled = !shell.exec('which functions', {silent:true}).stdout
-	if (gcloudNotInstalled) {
-		console.log(
-			`${'ERROR'.bold.italic}: The ${'gcloud SDK'.italic} seems to not be installed on your machine.\n`.yellow +
-			'You won\'t be able to use your terminal to deploy this project to your Google Cloud Account or run it locally.\n'.yellow +
-			`${'We recommend to install it (instructions here:'.yellow} ${'https://cloud.google.com/sdk/downloads'.underline.italic.blue}).\n`)
-		/*eslint-disable */
-        process.exit(1)
-        /*eslint-enable */
-	}
-	if (functionsNotInstalled) {
-		console.log(
-			(`${'ERROR'.bold.italic}: ${'Google Function Emulator'.italic} seems to not be installed on your machine.\n` +
-			'You won\'t be able to run this project on your local machine.\n' +
-			`We recommend to install it globally: ${'npm install -g @google-cloud/functions-emulator'.bold.italic}\n`).yellow)
-		/*eslint-disable */
-        process.exit(1)
-        /*eslint-enable */
-	}
-}
+exports.preQuestions = () => {}
 
 exports.questions = [{
 	question: answers => `project name: ${answers._dest ? `(${sanitizeDest(answers._dest)}) ` : ''} `.cyan,
@@ -94,8 +73,8 @@ exports.questions = [{
 	},
 	files: ['index.js', 'appconfig.json']
 },{
-	question: answers => `Google Cloud Project: (${answers.projectName.toLowerCase()}) `.cyan,
-	answerName: 'googleProject',
+	question: answers => `${answers.hosting == 'googlecloud' ? 'Google Cloud' : 'Firebase'} Project: (${answers.projectName.toLowerCase()}) `.cyan,
+	answerName: 'project',
 	defaultValue: answers => answers.projectName,
 	execute: {
 		onSuccess: answer => answer.toLowerCase()
