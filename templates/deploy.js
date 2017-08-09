@@ -64,7 +64,7 @@ exports.deploy = (env = 'default') => {
 
 	if (hosting == 'googlecloud') {
 		const gcloudNotInstalled = !shell.exec('which gcloud', {silent:true}).stdout
-		exitIf(gcloudNotInstalled, `${'gcloud SDK'.italic} seems to not be installed on your machine.\n\nYou won\'t be able to use your terminal to deploy this project to your Google Cloud Account or run it locally.\nInstall it (link:${'https://cloud.google.com/sdk/downloads'.underline.italic}). And then come back here and wip me more you dirty pet.`)
+		exitIf(gcloudNotInstalled, `${'gcloud SDK'.italic} seems to not be installed on your machine.\n\nYou won't be able to use your terminal to deploy this project to your Google Cloud Account or run it locally.\nInstall it (link:${'https://cloud.google.com/sdk/downloads'.underline.italic}). And then come back here and wip me more you dirty pet.`)
 		exitIf(!config.trigger, `${'appconfig.json'.italic.bold} does not define any ${'trigger'.italic.bold} property under its ${env.italic.bold} environment. Who's been naughty here?!`)
 		exitIf(!config.entryPoint, `${'appconfig.json'.italic.bold} does not define any ${'entryPoint'.italic.bold} property under its ${env.italic.bold} environment. Who's been naughty here?!`)
 
@@ -109,13 +109,15 @@ exports.deploy = (env = 'default') => {
 			createFirebaserc(env, config.project)
 
 			try {
+				/*eslint-disable */
 				process.on('SIGINT', () => deleteFirebaserc())
+				/*eslint-enable */
 				console.log(`${'LOCALLY'.italic.bold} deploying entry-point ${config.entryPoint.italic.bold} using trigger type ${config.trigger.italic.bold}.`.cyan)
 				shell.exec(`firebase use ${config.project}`)
 				shell.exec('firebase serve --only functions')
 			}
 			catch(err) {
-				console.log(`Local server has stopped`.magenta)
+				console.log('Local server has stopped'.magenta)
 			}
 			finally {
 				deleteFirebaserc()
@@ -133,7 +135,7 @@ exports.deploy = (env = 'default') => {
 				console.log(`Deployment successful (${(Date.now() - startClock)/1000} sec.). I'm proud my gimp. We didn't use the safety word at the end. I'll be harsher next time gimp!`.green)
 			}
 			catch(err) { 
-				console.log(`Oops! Sorry but something went wrong Master!`.red)
+				console.log('Oops! Sorry but something went wrong Master!'.red)
 			}
 			finally {
 				deleteFirebaserc()
