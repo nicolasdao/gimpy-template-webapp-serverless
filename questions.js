@@ -13,13 +13,16 @@ const HOSTING = { '1': 'googlecloud', '2': 'firebase' }
 
 exports.preQuestions = () => {}
 
+exports.onTemplateLoaded = answers => `Congratulation Master! Your new ${answers.hosting == 'googlecloud' ? 'Google Cloud' : 'Firebase'} Function Web Server project ${answers.projectName} is ready.\nNext step is to run ${answers._dest ? `cd ${answers._dest}; npm install`.italic.bold : 'npm install'.italic.bold}`
+
 exports.questions = [{
 	question: answers => `project name: ${answers._dest ? `(${sanitizeDest(answers._dest)}) ` : ''} `.cyan,
 	answerName: 'projectName',
 	defaultValue: answers => answers._dest,
 	execute: {
-		validate: null,
-		onSuccess: answer => sanitizeProjectName(answer)
+		validate: answer => answer,
+		onSuccess: answer => sanitizeProjectName(answer),
+		onError: answer => `Ooch ooch Master! The project name is required. Give it a slap again. Slap slap...`
 	},
 	files: ['package.json']
 },{
@@ -74,7 +77,7 @@ exports.questions = [{
 	},
 	files: ['index.js', 'appconfig.json']
 },{
-	question: answers => `${answers.hosting == 'googlecloud' ? 'Google Cloud' : 'Firebase'} Project (If you're not sure, run ${answers.hosting == 'googlecloud' ? `'gcloud projects list'`.italic.bold : `'firebase list'`.italic.bold} to list all your available projects): (${answers.projectName.toLowerCase()}) `.cyan,
+	question: answers => `${answers.hosting == 'googlecloud' ? 'Google Cloud' : 'Firebase'} Project (If you're not sure, run ${answers.hosting == 'googlecloud' ? `'gcloud projects list'`.italic.bold : `'firebase list'`.italic.bold} to list all your available projects. If you're deploying locally, this question does not really matter): (${answers.projectName.toLowerCase()}) `.cyan,
 	answerName: 'project',
 	defaultValue: answers => answers.projectName,
 	execute: {
