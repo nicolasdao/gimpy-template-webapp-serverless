@@ -5,10 +5,11 @@ const colors = require('colors')
 
 const sanitizeDest = dest => dest ? dest.split(' ').map(x => x.trim().toLowerCase()).join('') : null
 const sanitizeProjectName = name => name ? name.split(' ').join('-') : null
-const sanitizeEntryPoint = name => name ? name.split(' ').join('') : null
+const sanitizeEntryPoint = name => name ? name.split(' ').join('').replace('-','') : null
 const sanitizeFunctionName = name => name ? name.trim().split(' ').map(x => x.toLowerCase()).join('-') : null
 const sanitizeBucket = name => name ? name.trim().split(' ').map(x => x.toLowerCase()).join('-') : null
 const TRIGGERS = { '1': '--trigger-http', '2': '--trigger-topic', '3': '--trigger-bucket' }
+const HOSTING = { '1': 'googlecloud', '2': 'firebase' }
 
 exports.preQuestions = () => {
 	const gcloudNotInstalled = !shell.exec('which gcloud', {silent:true}).stdout
@@ -56,20 +57,35 @@ exports.questions = [{
 	},
 	files: ['appconfig.json']
 },{
-	question: () => ('Google Cloud Function trigger: \n' + 
-					'  [1] HTTP \n' +
-					'  [2] Pub/Sub \n' +
-					'  [3] Storage \n' +
+	question: () => ('Hosting: \n' + 
+					'  [1] Google Cloud Functions \n' +
+					'  [2] Firebase Functions \n' +
 					'Choose one of the above: ([1]) ').cyan,
-	answerName: 'trigger',
+	answerName: 'hosting',
 	defaultValue: () => 1,
 	execute: {
-		validate: answer => TRIGGERS[answer],
-		onSuccess: answer => TRIGGERS[answer],
-		onError: answer => `'${answer}' is not a valid trigger.`
+		validate: answer => HOSTING[answer],
+		onSuccess: answer => HOSTING[answer],
+		onError: answer => `'${answer}' is not a valid hosting option.`
 	},
 	files: ['appconfig.json']
-},{
+},
+// {
+// 	question: () => ('Google Cloud Function trigger: \n' + 
+// 					'  [1] HTTP \n' +
+// 					'  [2] Pub/Sub \n' +
+// 					'  [3] Storage \n' +
+// 					'Choose one of the above: ([1]) ').cyan,
+// 	answerName: 'trigger',
+// 	defaultValue: () => 1,
+// 	execute: {
+// 		validate: answer => TRIGGERS[answer],
+// 		onSuccess: answer => TRIGGERS[answer],
+// 		onError: answer => `'${answer}' is not a valid trigger.`
+// 	},
+// 	files: ['appconfig.json']
+// },
+{
 	question: answers => `Google Cloud Function entry-point (no spaces, no hyphens): (${sanitizeEntryPoint(answers.projectName)}) `.cyan,
 	answerName: 'entryPoint',
 	defaultValue: answers => answers.projectName,

@@ -1,8 +1,0 @@
-{
-	"name": "basicwebapp-google-functions",
-	"version": "0.0.1",
-	"description": "Basic web app project for Google Cloud Functions built using the webfunc HTTP Handler package.",
-	"host": "google-cloud-functions",
-	"author": "Nicolas Dao",
-	"license": "BSD-3-Clause"
-}

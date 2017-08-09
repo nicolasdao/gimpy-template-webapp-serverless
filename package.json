@@ -1,0 +1,30 @@
+{
+  "name": "basicwebapp-gcf",
+  "version": "1.0.0",
+  "description": "Lightweight web server for google cloud functions or firebase functions.",
+  "main": "questions.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint question.js templates/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicolasdao/gimpy-template-basicwebapp-gcf.git"
+  },
+  "keywords": [
+    "serverless",
+    "google-functions",
+    "firebase-functions",
+    "firebase",
+    "functions"
+  ],
+  "author": "Nicolas Dao",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/nicolasdao/gimpy-template-basicwebapp-gcf/issues"
+  },
+  "homepage": "https://github.com/nicolasdao/gimpy-template-basicwebapp-gcf#readme",
+  "devDependencies": {
+    "eslint": "^4.4.1"
+  }
+}
