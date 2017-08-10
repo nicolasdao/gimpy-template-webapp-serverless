@@ -10,7 +10,7 @@ npm install gimpy -g
 
 ## How To Use It
 ```
-gimp new basicwebapp-gcf your-app
+gimp new webapp-serverless your-app
 cd your-app
 npm install
 gimp deploy
