@@ -7,7 +7,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "webfunc": "0.8.0-alpha.1"
+    "webfunc": "0.8.0-alpha.2"
   },
   "devDependencies": {
     "chai": "^4.1.0",
